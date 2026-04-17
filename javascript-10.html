@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <p>요일을 구하는  방 법</p>
+
+    <h1>실시간 시게</h1>
+    <p class="clock"></p>
+
+    <script>
+
+        // 0~6: 일~토
+        // let days = ["일","월","화","수","목","금","토"];
+        // let day = days[now.getDay()];
+        // let year = now.getFullYear();
+        // let month = now.getMonth()+1;
+        // let date = now.getDate();
+
+        // document.write(year + "-" + month + "-" + date + " " + day + "요일");
+
+        let clock = document.querySelector(".clock");
+
+        function updateClock(){
+            let now = new Date();
+            let hour = now.getHours();
+            let min = now.getMinutes();
+            let sec = now.getSeconds();
+
+            clock.innerHTML = hour + ":" + min + ":" + sec;
+        }
+        setInterval(updateClock,1000);
+
+        
+
+    </script>
+
+    
+</body>
+</html>

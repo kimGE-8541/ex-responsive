@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <p id="text">안녕하세요</p>
+    <!-- DOM 제어방법 -->
+     <!-- Document.object.model -->
+    <hr>
+
+     <button id="btn1">클릭됨</button>
+
+     <button id="btn2">클릭2</button>
+
+     <script>
+        // document.getElementById("text").innerHTML="변경됨"; <- 옛날방식
+
+        document.querySelector("#text").innerHTML="변경됨";
+        // ID는 앞에 #, class 는 앞에 . 을 붙임
+
+        document.querySelector("#btn1").onclick = function(){
+            // 버튼을 클릭하면 function을 실행
+            alert("클릭됨");
+        }
+
+        // 위에는 익명함수
+
+        function abc(){
+            alert("클림을햇다");
+        }
+
+        document.querySelector("#btn2").onclick = abc;
+
+        function hello(name){
+            document.write(name+"님 로그인");
+            // 여기서 name 은 매개변수
+        }
+
+        hello("정수");
+
+        function add(a,b){
+            return a+b;
+
+        }
+
+        let result = add(2,3);
+        document.write(result);
+
+     </script>
+    
+</body>
+</html>

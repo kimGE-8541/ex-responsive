@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>jQuery</title>
+</head>
+<body style="background-color: bisque;">
+    <p class="color-text">졸려요</p>
+    <button class="btn1">버ㅌㄴ</button>
+    <p class="text-num">아니~</p>
+    <button class="btn2">쿨쿨따</button>
+
+    <p class="ex">예제</p>
+    <button class="big-light">빅라이트</button>
+    <button class="blue-light">블루라이트</button>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script>
+        $(".btn1").click(function(){
+            $(".color-text").css("color","red").css("background-color","blue");
+            $(".color-text").text("졸ㅈㄹㄹㄹㅈㄹㅈㄹ");
+            alert("안졸앗음");
+        })
+
+        $(".btn2").mouseup(function(){
+            $(".text-num").slideUp();
+        })
+
+        let btn2 = document.querySelector(".btn2");
+        btn2.addEventListener("click",function(){
+
+        })
+
+        $(".big-light").click(function(){
+            $(".ex").css("font-size","50px");
+        })
+        
+        $(".blue-light").click(function(){
+            $(".ex").css("color","blue");
+        })
+
+    </script>
+</body>
+</html>

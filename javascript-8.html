@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <p>대상. 이벤트("어떻게", 하면);</p>
+    <input type="text" class="memo">
+    <button class="btn1">추가하기</button>
+    <p class="text"></p>
+
+    <script>
+        let btn1 = document.querySelector('.btn1');
+        // 버튼 가져오기
+        let text = document.querySelector('.text');
+        // 글자 가져오기'
+        let memo = document.querySelector('.memo');
+        // 메모 가져오기
+
+
+
+
+        btn1.onclick = function(){
+            let value = memo.value;
+            
+            if(value.trim()===""){
+                alert("입력필수");
+                return;
+            }
+
+            text.innerHTML += value +"<br>";
+            memo.value = ""
+
+
+        }
+
+
+
+
+
+    </script>
+</body>
+</html>
