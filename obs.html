@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 100%;
+            height: 100vh;
+            position: relative;
+        }
+
+        .panel {
+            position: absolute;
+            width: 100%;
+            height: 100vh;
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 5rem;
+            color: white;
+            transform: translateY(100%);
+
+        }
+
+        .panel:first-child {
+            transform: translateY(0%);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <section class="panel" style="background-image: url(images/bg-1.jpg);">
+            <h1>01</h1>
+        </section>
+        <section class="panel" style="background-image: url(images/bg-2.jpg);">
+            <h1>02</h1>
+        </section>
+        <section class="panel" style="background-image: url(images/bg-3.jpg);">
+            <h1>03</h1>
+        </section>
+        <section class="panel" style="background-image: url(images/bg-4.jpg);">
+            <h1>04</h1>
+        </section>
+        <section class="panel" style="background-image: url(images/bg-5.jpg);">
+            <h1>05</h1>
+        </section>
+        <section class="panel" style="background-image: url(images/bg-6.jpg);">
+            <h1>06</h1>
+        </section>
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/gsap.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/Observer.min.js"></script>
+
+    <script>
+        gsap.registerPlugin(Observer);
+
+        let sections = document.querySelectorAll(".panel");
+        let currentIndex = 0;
+        let animating = false;
+
+        // 모든 섹션의 높이를 미리 세팅 (겹쳐두기)
+        gsap.set(sections, { yPercent: 100 });
+        gsap.set(sections[0], { yPercent: 0 }); // 1번만 화면에 보이게
+
+        function goToSection(index) {
+            // [중요] 6번 이미지(인덱스 5)에서 더 내려가거나, 1번에서 더 올라가지 않게 차단!
+            if (index < 0 || index >= sections.length || animating) return;
+
+            animating = true;
+
+            // 올라올 이미지와 나갈 이미지 결정
+            let currentPanel = sections[currentIndex];
+            let nextPanel = sections[index];
+
+            if (index > currentIndex) {
+                // 아래에서 위로 올라오는 경우 (Next)
+                gsap.set(nextPanel, { yPercent: 100, zIndex: 1 }); // 대기 장소
+                gsap.to(currentPanel, { yPercent: -100, duration: 1 }); // 기존껀 위로 퇴장
+                gsap.to(nextPanel, { yPercent: 0, duration: 1, onComplete: () => animating = false }); // 새껀 입장
+            } else {
+                // 위에서 아래로 내려오는 경우 (Prev)
+                gsap.set(nextPanel, { yPercent: -100, zIndex: 1 }); // 대기 장소
+                gsap.to(currentPanel, { yPercent: 100, duration: 1 }); // 기존껀 아래로 퇴장
+                gsap.to(nextPanel, { yPercent: 0, duration: 1, onComplete: () => animating = false }); // 새껀 입장
+            }
+
+            currentIndex = index;
+        }
+
+        Observer.create({
+            target: window,
+            type: "wheel,touch",
+            onDown: () => goToSection(currentIndex + 1),
+            onUp: () => goToSection(currentIndex - 1),
+            tolerance: 50,
+            preventDefault: true // 브라우저의 기본 스크롤 동작을 완전히 무시
+        });
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/locomotive-scroll/bundled/locomotive-scroll.css" />
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+
+        }
+
+        section {
+            height: 100vh;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            font-size: 30px;
+        }
+
+        .sec1 {
+            background-color: aqua;
+        }
+
+        .sec2 {
+            background-color: aquamarine;
+        }
+
+        h1 {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: .5s;
+        }
+
+        h1.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .sec4 {
+            flex-direction: column;
+            font-size: 20px;
+        }
+
+        .text-wrap {
+            height: 200vh;
+        }
+
+        .txt {
+            opacity: 0;
+            transition: opacity .3s;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div data-scroll-container>
+        <section class="sec1" data-scroll-section>
+            <p>첫번쨰화면</p>
+        </section>
+        <section class="sec2" data-scroll-section>
+            <h1 class="fade" data-scroll data-scroll-class="active">부드럽게 움직임</h1>
+        </section>
+        <section class="sec3" data-scroll-section>
+            <div>
+                <img src="./bg.jpg" alt="" data-scroll data-scroll-speed="1">
+            </div>
+        </section>
+        <section class="sec4">
+            <div class="text-wrap" data-scroll data-scroll-css-progress="progress" data-scroll-offset="20%,80%">
+                <h2 class="txt">지금까지</h2>
+                <h2 class="txt">스크롤 트리거가</h2>
+                <h2 class="txt">작동하는 애니메이션</h2>
+                <h2 class="txt">입니다</h2>
+            </div>
+        </section>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/locomotive-scroll/bundled/locomotive-scroll.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/gsap.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/ScrollTrigger.min.js"></script>
+    <script>
+        const locoScroll = new LocomotiveScroll({
+            el: document.querySelector('[data-scroll-container]'),
+            smooth: true
+        });
+
+        const wrap = document.querySelector('.text-wrap');
+        const texts = document.querySelectorAll('.txt');
+
+        function updateText() {
+            const raw = getComputedStyle(wrap).getPropertyValue('--progress');
+            const progress = parseFloat(raw);
+
+            if (isNaN(progress)) return;
+
+            const total = texts.length;
+            const step = 1 / total;
+
+            texts.forEach((el, i) => {
+                const start = step * i;
+                const end = step * (i + 1);
+
+                if (progress > start) {
+                    el.style.opacity = 1;
+                } else {
+                    el.style.opacity = 0;
+                }
+            });
+        }
+
+        function loop() {
+            updateText();
+            requestAnimationFrame(loop);
+        }
+
+        loop();
+    </script>
+</body>
+
+</html>

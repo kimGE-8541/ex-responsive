@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/locomotive-scroll/bundled/locomotive-scroll.css" />
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .sec1 {
+            background-color: blue;
+            height: 100vh;
+        }
+
+        .sec2 {
+            height: 600vh;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .pin-wrap {
+            position: relative;
+            height: 100vh;
+        }
+
+        .horizontal {
+            position: absolute;
+            top: 0;
+            left: 0;
+            display: flex;
+            width: 600vw;
+            height: 100vh;
+            will-change: transform;
+        }
+
+        .panel {
+            min-width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 10% 10%;
+        }
+
+        .panel img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .sec3 {
+            height: 100vh;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div data-scroll-container>
+        <section class="sec1" data-scroll-section>
+            <div>
+                <h1>
+                    BlueBenny
+                    <br>Media
+                </h1>
+            </div>
+            <div>
+                <p>
+                    Home to the catalog of one of the most celebrated photographers in the entertainment industry,
+                    <br>E-BENNY.
+                </p>
+            </div>
+        </section>
+        <section class="sec2" data-scroll-section>
+            <div class="pin-wrap" data-scroll data-scroll-sticky data-scroll-target=".sec2" data-scroll-position="top">
+                <div class="horizontal">
+                    <div class="panel">
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius dolores nihil ab numquam qui
+                            repellat
+                            praesentium, corrupti reiciendis consectetur tenetur voluptate necessitatibus, consequatur
+                            placeat
+                            repellendus labore assumenda nobis doloremque odio?</p>
+                    </div>
+                    <div class="panel"> <img src="images/1.jpg" alt=""></div>
+                    <div class="panel"> <img src="images/2.jpg" alt=""></div>
+                    <div class="panel"> <img src="images/3.jpg" alt=""></div>
+                    <div class="panel"> <img src="images/4.jpg" alt=""></div>
+                    <div class="panel"> <img src="images/5.jpg" alt=""></div>
+                </div>
+            </div>
+        </section>
+        <section class="sec3" data-scroll-section>
+            <img src="images/6.jpg" alt="">
+        </section>
+    </div>
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/gsap.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/locomotive-scroll/bundled/locomotive-scroll.min.js"></script>
+    <script>
+        const locomotiveScroll = new LocomotiveScroll({
+            el: document.querySelector('[data-scroll-container]'),
+            smooth: true,
+            lerp: 0.1,
+        });
+
+        const sec2 = document.querySelector('.sec2');
+        const horizontal = document.querySelector('.horizontal');
+        const panelCount = document.querySelectorAll('.panel').length;
+
+        const getMaxTranslate = () => window.innerWidth * (panelCount - 1);
+
+        const getScrollY = () => {
+            if (locomotiveScroll?.scroll?.y != null) {
+                return locomotiveScroll.scroll.y;
+            }
+            return window.scrollY || document.documentElement.scrollTop || 0;
+        };
+
+        const updateHorizontal = () => {
+            const scrollY = getScrollY();
+            const sec2Top = sec2.getBoundingClientRect().top + scrollY;
+            const start = sec2Top;
+            const end = sec2Top + sec2.offsetHeight - window.innerHeight;
+            const progress = Math.min(Math.max((scrollY - start) / (end - start), 0), 1);
+            horizontal.style.transform = `translateX(-${progress * getMaxTranslate()}px)`;
+        };
+
+        const animate = () => {
+            updateHorizontal();
+            requestAnimationFrame(animate);
+        };
+
+        window.addEventListener('resize', () => {
+            updateHorizontal();
+        });
+
+        window.addEventListener('load', () => {
+            updateHorizontal();
+        });
+
+        animate();
+    </script>
+</body>
+
+</html>

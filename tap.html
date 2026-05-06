@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            box-sizing: border-box;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        li {
+            list-style: none;
+        }
+
+        .container {
+            width: 1440px;
+            margin: auto;
+        }
+
+        .tab-title>ul {
+            display: flex;
+        }
+
+        .tab-title li {
+            width: 33%;
+            text-align: center;
+            padding: 20px 0;
+            border-radius: 20px 20px 0 0;
+            cursor: pointer;
+        }
+
+        .line-active {
+            background-color: aqua;
+        }
+
+        .tab-body div {
+            background-color: aqua;
+            height: 300px;
+        }
+
+        .display-none{
+            display: none;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="container">
+        <div class="tab-title">
+            <ul>
+                <li class="tab-title-1 line-active"><a href="#">Tab-1</a></li>
+                <li class="tab-title-2"><a href="#">Tab-2</a></li>
+                <li class="tab-title-3"><a href="#">Tab-3</a></li>
+            </ul>
+        </div>
+        <div class="tab-body">
+            <div class="tab-body-1">
+                <h2>body1</h2>
+            </div>
+            <div class="tab-body-2 display-none">
+                <h2>body2</h2>
+            </div>
+            <div class="tab-body-3 display-none">
+                <h2>body3</h2>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <script src="js/libs/jquery.min.js"></script>
+    <script>
+        $(function () {
+            // $(".tab-title-2").click(function () {
+            //     $(".tab-body-2").removeClass("tab-active");
+            //     $(".tab-body-1").addClass("tab-active");
+            // }),
+            // $(".tab-title-1").click(function () {
+            //     $(".tab-body-2").removeClass("tab-active");
+            //     $(".tab-body-1").addClass("tab-active");
+            // })
+
+            $(".tab-title li").click(function(){
+                let index = $(this).index();
+
+                $(".tab-title li").removeClass("line-active");
+                $(".tab-title li").eq(index).addClass("line-active");
+
+                $(".tab-body > div").hide();
+                $(".tab-body > div").eq(index).show();
+            })
+        })
+    </script>
+</body>
+
+</html>

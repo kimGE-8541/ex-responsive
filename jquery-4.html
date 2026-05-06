@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>jQuery UI Accordion - Default functionality</title>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.14.2/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="/resources/demos/style.css">
+    <style>
+        .row {
+            display: flex;
+        }
+
+        .col-6 {
+            width: 50%;
+        }
+
+        .qna-title {
+            background-color: pink;
+            border-radius: 0;
+            border: 0;
+            position: relative;
+        }
+
+.qna-title {
+    display: flex !important;
+    align-items: center !important; /* 세로 중앙 정렬 */
+    justify-content:space-between !important; /* 글자는 왼쪽, 아이콘은 오른쪽 끝 */
+    flex-direction: row-reverse; /* 아이콘을 오른쪽으로 보내기 위해 순서 뒤집기 */
+}
+    </style>
+</head>
+
+<body>
+
+    <section class="content">
+        <div class="row">
+            <div class="col-6">
+                <h3>자주묻는질문</h3>
+            </div>
+            <div class="col-6">
+                <div class="qna">
+                    <h3 class="qna-title">졸려요</h3>
+                    <div class="qna-body">
+                        <p>너무너문머눔너무너누너눈졸려</p>
+                        <p><a href="#" title="짱구야 노올ㄹ자">하나둘셋야</a>두두두두두두두두두둗두두</p>
+                    </div>
+                    <h3 class="qna-title">졸려요</h3>
+                    <div class="qna-body">
+                        <p>너무너문머눔너무너누너눈졸려</p>
+                        <p>하나둘셋야두두두두두두두두두둗두두</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+
+
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="https://code.jquery.com/ui/1.14.2/jquery-ui.js"></script>
+    <script>
+        $(function () {
+            $("#accordion").accordion();
+        });
+
+        $(function () {
+            $(".qna").accordion({
+                collapsible: true,
+                active: false
+            });
+            $(document).tooltip();
+        });
+    </script>
+</body>
+
+</html>

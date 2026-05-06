@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>GSAP TEST</title>
+
+<style>
+* {margin:0; padding:0; box-sizing:border-box;}
+
+/* =========================
+   KV 영역
+========================= */
+.kv {
+  height: 100vh;
+  display:flex;
+  align-items:flex-end;
+  padding: 60px;
+  background:#111;
+  color:#fff;
+  font-size:32px;
+  line-height:1.4;
+}
+
+/* =========================
+   pin 영역
+========================= */
+.pin-section {
+  display:flex;
+  height:100vh;
+}
+
+/* 왼쪽 (이미지) */
+.left {
+  width:50%;
+  position:relative;
+  overflow:hidden;
+}
+
+.left img {
+  position:absolute;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  opacity:0;
+}
+
+/* 첫 이미지 보이기 */
+.left img.active {
+  opacity:1;
+}
+
+/* 오른쪽 (텍스트) */
+.right {
+  width:50%;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+
+.text {
+  font-size:40px;
+  font-weight:bold;
+  text-align:center;
+}
+
+/* 하단 여유 */
+.spacer {
+  height:100vh;
+}
+
+.zoom-section {
+  position: relative;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* 배경 */
+.bg {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: url("assets/images/img1.png") center/cover no-repeat;
+  transform: translateY(20%) scale(0.8);
+}
+
+/* 텍스트 공통 */
+.text-wrap {
+  position: relative;
+  height: 100%;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+
+.text {
+  position: absolute;
+  font-size: 42px;
+  font-weight: bold;
+}
+
+/* 기본 텍스트 */
+.text-dark {
+  color: #111;
+}
+
+/* 배경 위에서 보일 텍스트 */
+.text-light {
+  color: #fff;
+
+  /* 처음엔 안 보이게 */
+  clip-path: inset(100% 0 0 0);
+}
+</style>
+</head>
+
+<body>
+<section class="kv">
+  <div>
+    지속가능한 내일을 위해<br>
+    끊임없는 도전을 이어갑니다.
+  </div>
+</section>
+
+<!-- PIN SECTION -->
+<section class="pin-section">
+
+  <!-- LEFT IMAGE -->
+  <div class="left">
+    <img src="assets/images/img1.png" class="img1 active">
+    <img src="assets/images/img2.png" class="img2">
+    <img src="assets/images/img3.png" class="img3">
+  </div>
+
+  <!-- RIGHT TEXT -->
+  <div class="right">
+    <div class="text">TEXT 1</div>
+  </div>
+
+</section>
+
+<div class="spacer"></div>
+
+<section class="zoom-section">
+
+  <div class="bg"></div>
+
+  <div class="text-wrap">
+    <div class="text text-dark">새로운 가치를 만들어갑니다</div>
+    <div class="text text-light">새로운 가치를 만들어갑니다</div>
+  </div>
+
+</section>
+
+
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/gsap.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/ScrollTrigger.min.js"></script>
+<!-- ScrollSmoother requires ScrollTrigger -->
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/ScrollSmoother.min.js"></script>
+
+
+<script>
+
+const images = document.querySelectorAll(".left img");
+const text = document.querySelector(".text");
+
+/* 상태 데이터 */
+const data = [
+  { text: "TEXT 1" },
+  { text: "TEXT 2" },
+  { text: "TEXT 3" }
+];
+
+/* 타임라인 */
+const tl = gsap.timeline({
+  scrollTrigger: {
+    trigger: ".pin-section",
+    start: "top top",
+    end: "+=2000",
+    scrub: true,
+    pin: true,
+    markers: true
+  }
+});
+
+/* 이미지 + 텍스트 전환 함수 */
+function changeContent(index) {
+  images.forEach(img => img.classList.remove("active"));
+  images[index].classList.add("active");
+  text.textContent = data[index].text;
+}
+
+/* 1 → 2 */
+tl.to({}, {
+  duration: 1,
+  onStart: () => changeContent(1)
+});
+
+/* 2 → 3 */
+tl.to({}, {
+  duration: 1,
+  onStart: () => changeContent(2)
+});
+
+ScrollTrigger.create({
+  trigger: ".zoom-section",
+  start: "top top",
+  end: "+=2000",
+  scrub: true,
+  pin: true,
+
+  onUpdate: self => {
+    const p = self.progress;
+
+    // 배경
+    gsap.set(".bg", {
+      y: (1 - p) * 20 + "%",
+      scale: 0.8 + (0.4 * p)
+    });
+
+    // 텍스트 (완전히 동일 progress 사용)
+    gsap.set(".text-light", {
+      clipPath: `inset(${(1 - p) * 100}% 0 0 0)`
+    });
+  }
+});
+
+</script>
+
+</body>
+</html>
