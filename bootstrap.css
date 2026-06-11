@@ -1,0 +1,38 @@
+.sec01--kv {
+    background: url('images/bg-5.jpg');
+    color: #fff;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.display-content {
+    height: 100vh;
+}
+
+.icon-content span {
+    font-size: 60px;
+}
+
+.yellow {
+    background-color: yellow;
+    padding: 160px 0;
+}
+
+/* md의 break point기준: 767px */
+
+.intro-img{
+    background-image: url(images/1.jpg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+.intro-txt{
+    width: 100%;
+    max-width: 668px;
+}
+
+.sec04--static .container{
+    padding: 160px 0;
+}
